@@ -108,10 +108,9 @@
 
         /* ------------------ لوحة التحكم (الداشبورد) ------------------ */
         #dashboard-screen {
-            display: none;
+            display: none; /* تم التصحيح هنا لتبقى مخفية في البداية */
             width: 100%;
             height: 100%;
-            display: flex;
         }
 
         /* القائمة الجانبية */
@@ -284,9 +283,6 @@
     </div>
 
     <script>
-        // إخفاء الداشبورد افتراضياً
-        document.getElementById('dashboard-screen').style.display = 'none';
-
         // دالة تسجيل الدخول الحقيقية (تتصل بالسيرفر)
         async function doLogin() {
             var host = document.getElementById('host-url').value.trim();
@@ -364,3 +360,4 @@
     </script>
 </body>
 </html>
+
