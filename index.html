@@ -108,7 +108,7 @@
 
         /* ------------------ لوحة التحكم (الداشبورد) ------------------ */
         #dashboard-screen {
-            display: none; /* تم التصحيح هنا لتبقى مخفية في البداية */
+            display: none;
             width: 100%;
             height: 100%;
         }
@@ -283,7 +283,9 @@
     </div>
 
     <script>
-        // دالة تسجيل الدخول الحقيقية (تتصل بالسيرفر)
+        // إخفاء الداشبورد افتراضياً
+        document.getElementById('dashboard-screen').style.display = 'none';
+
         async function doLogin() {
             var host = document.getElementById('host-url').value.trim();
             var user = document.getElementById('username').value.trim();
@@ -295,35 +297,34 @@
                 return;
             }
 
-            // إزالة / من آخر الرابط إذا كانت موجودة
             if (host.endsWith('/')) {
                 host = host.slice(0, -1);
             }
 
-            // تغيير نص الزر عشان يبين إنه جالس يحمل
             loginBtn.innerText = "⏳ جاري التحميل...";
             loginBtn.disabled = true;
 
             try {
-                // رابط الاتصال المخصص بسيرفرات IPTV (Xtream API)
+                // الرابط الأصلي للسيرفر
                 let apiUrl = `${host}/player_api.php?username=${user}&password=${pass}`;
                 
-                // جلب البيانات من السيرفر
-                let response = await fetch(apiUrl);
-                let data = await response.json();
+                // 🚀 استخدام رابط وسيط (CORS Proxy) لتخطي حماية المتصفح
+                let proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+                
+                let response = await fetch(proxyUrl);
+                let proxyData = await response.json();
+                
+                // تحويل البيانات النصية اللي رجعها الوسيط إلى JSON
+                let data = JSON.parse(proxyData.contents);
 
-                // التحقق من أن السيرفر رد علينا وأن البيانات صحيحة
                 if (data.user_info && data.user_info.auth === 1) {
-                    // نجاح الدخول!
                     alert("✅ تم تسجيل الدخول بنجاح! مرحباً: " + data.user_info.username);
                     
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('dashboard-screen').style.display = 'flex';
                     
-                    // إرجاع الزر لحالته الطبيعية
                     loginBtn.innerText = "تسجيل الدخول";
                     loginBtn.disabled = false;
-
                 } else {
                     alert("❌ فشل تسجيل الدخول: تأكد من السيرفر، اليوزر، والباسورد.");
                     loginBtn.innerText = "تسجيل الدخول";
@@ -332,13 +333,12 @@
 
             } catch (error) {
                 console.error("تفاصيل الخطأ:", error);
-                alert("⚠️ حدث خطأ في الاتصال بالسيرفر!\nالسبب المحتمل: السيرفر الذي أدخلته يمنع الاتصال المباشر من المتصفح (حماية CORS) أو الرابط خاطئ.");
+                alert("⚠️ لا يزال هناك خطأ في الاتصال! تأكد من أن رابط السيرفر يعمل بشكل صحيح.");
                 loginBtn.innerText = "تسجيل الدخول";
                 loginBtn.disabled = false;
             }
         }
 
-        // دالة تسجيل الخروج
         function doLogout() {
             document.getElementById('dashboard-screen').style.display = 'none';
             document.getElementById('login-screen').style.display = 'flex';
@@ -347,7 +347,6 @@
             document.getElementById('password').value = '';
         }
 
-        // دالة التبديل بين الأقسام
         function showSection(sectionId, element) {
             var blocks = document.querySelectorAll('.content-block');
             blocks.forEach(function(block) { block.style.display = 'none'; });
