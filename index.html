@@ -20,9 +20,93 @@
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-light);
-            display: flex;
             height: 100vh;
             overflow: hidden;
+            display: flex;
+        }
+
+        /* ------------------ شاشة تسجيل الدخول ------------------ */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background-color: var(--bg-sidebar);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid #1e293b;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: #6366f1;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #334155;
+            background-color: var(--bg-main);
+            color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent-purple);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-purple);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #4338ca;
+        }
+
+        /* ------------------ لوحة التحكم (الداشبورد) ------------------ */
+        #dashboard-screen {
+            display: none; /* مخفية بالبداية حتى يسجل دخول */
+            width: 100%;
+            height: 100%;
+            display: flex;
         }
 
         /* القائمة الجانبية */
@@ -61,7 +145,6 @@
 
         .nav-btn:hover, .nav-btn.active {
             background-color: var(--accent-purple);
-            transform: scale(1.02);
         }
 
         .logout-btn {
@@ -85,7 +168,6 @@
             color: #38bdf8;
         }
 
-        /* شبكة الكروت */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -128,79 +210,68 @@
             color: var(--text-muted);
         }
 
-        /* لتهيئة إخفاء وإظهار الأقسام */
         .content-block {
             display: none;
         }
 
         @media (max-width: 768px) {
-            body { flex-direction: column; }
-            #sidebar { width: 100%; height: auto; border-left: none; border-bottom: 1px solid #1e293b; }
+            #dashboard-screen { flex-direction: column; }
+            #sidebar { width: auto; height: auto; border-left: none; border-bottom: 1px solid #1e293b; }
             #main-content { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="sidebar">
-        <div class="sidebar-brand">IPTV Web Hub</div>
-        <button class="nav-btn active" onclick="showSection('live', this)">📺 القنوات الحرة</button>
-        <button class="nav-btn" onclick="showSection('movies', this)">🎬 مكتبة الأفلام</button>
-        <button class="nav-btn" onclick="showSection('series', this)">🍿 المسلسلات والفرسان</button>
-        <button class="nav-btn logout-btn" onclick="alert('تسجيل الخروج...')">🚪 تسجيل الخروج</button>
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>IPTV Web Hub</h2>
+            <div class="input-group">
+                <label>رابط السيرفر (Host/URL)</label>
+                <input type="text" id="host-url" placeholder="http://example.com:8080">
+            </div>
+            <div class="input-group">
+                <label>اسم المستخدم (Username)</label>
+                <input type="text" id="username" placeholder="اكتب اسم المستخدم">
+            </div>
+            <div class="input-group">
+                <label>كلمة المرور (Password)</label>
+                <input type="password" id="password" placeholder="اكتب كلمة المرور">
+            </div>
+            <button class="login-btn" onclick="doLogin()">تسجيل الدخول</button>
+        </div>
     </div>
 
-    <div id="main-content">
+    <div id="dashboard-screen">
         
-        <div id="live" class="content-block" style="display: block;">
-            <div class="section-title">📺 القنوات الرياضية الحية (Live Channels)</div>
-            <div class="grid-container">
-                <div class="card" onclick="alert('تشغيل القناة...')">
-                    <div class="card-icon">⚽</div>
-                    <div class="card-title">beIN Sports HD</div>
-                    <div class="card-meta">جودة 1080p</div>
-                </div>
-                <div class="card" onclick="alert('تشغيل القناة...')">
-                    <div class="card-icon">🏆</div>
-                    <div class="card-title">SSC Sports 1</div>
-                    <div class="card-meta">جودة 4K</div>
-                </div>
-            </div>
+        <div id="sidebar">
+            <div class="sidebar-brand">IPTV Web Hub</div>
+            <button class="nav-btn active" onclick="showSection('live', this)">📺 القنوات الحرة</button>
+            <button class="nav-btn" onclick="showSection('movies', this)">🎬 مكتبة الأفلام</button>
+            <button class="nav-btn" onclick="showSection('series', this)">🍿 المسلسلات والفرسان</button>
+            <button class="nav-btn logout-btn" onclick="doLogout()">🚪 تسجيل الخروج</button>
         </div>
 
-        <div id="movies" class="content-block">
-            <div class="section-title">🎬 أحدث الأفلام المضافة (Movies)</div>
-            <div class="grid-container">
-                <div class="card">
-                    <div class="card-icon" style="background: #3b0764;">🍿</div>
-                    <div class="card-title">فيلم أكشن 2026</div>
-                    <div class="card-meta">سرايم - ساعتان</div>
-                </div>
-                <div class="card">
-                    <div class="card-icon" style="background: #3b0764;">🍿</div>
-                    <div class="card-title">فيلم واقتي</div>
-                    <div class="card-meta">عيد ناايد</div>
-                </div>
-                <div class="card">
-                    <div class="card-icon" style="background: #3b0764;">🍿</div>
-                    <div class="card-title">هيلم دراما</div>
-                    <div class="card-meta">سرايم</div>
+        <div id="main-content">
+            <div id="live" class="content-block" style="display: block;">
+                <div class="section-title">📺 القنوات الرياضية الحية</div>
+                <div class="grid-container">
+                    <div class="card"><div class="card-icon">⚽</div><div class="card-title">beIN Sports HD</div><div class="card-meta">جودة 1080p</div></div>
+                    <div class="card"><div class="card-icon">🏆</div><div class="card-title">SSC Sports 1</div><div class="card-meta">جودة 4K</div></div>
                 </div>
             </div>
-        </div>
 
-        <div id="series" class="content-block">
-            <div class="section-title">🍿 المسلسلات والفرسان سيناء</div>
-            <div class="grid-container">
-                <div class="card">
-                    <div class="card-icon" style="background: #1e3a8a;">🎬</div>
-                    <div class="card-title">مسلسل الفرسان</div>
-                    <div class="card-meta">الموسم الأول</div>
+            <div id="movies" class="content-block">
+                <div class="section-title">🎬 مكتبة الأفلام</div>
+                <div class="grid-container">
+                    <div class="card"><div class="card-icon" style="background: #3b0764;">🍿</div><div class="card-title">فيلم أكشن 2026</div><div class="card-meta">سرايم - ساعتان</div></div>
                 </div>
-                <div class="card">
-                    <div class="card-icon" style="background: #1e3a8a;">🎬</div>
-                    <div class="card-title">مسلسل الفرسان حلقة 2</div>
-                    <div class="card-meta">محدث اليوم</div>
+            </div>
+
+            <div id="series" class="content-block">
+                <div class="section-title">🍿 المسلسلات</div>
+                <div class="grid-container">
+                    <div class="card"><div class="card-icon" style="background: #1e3a8a;">🎬</div><div class="card-title">مسلسل الفرسان</div><div class="card-meta">الحلقة 1</div></div>
                 </div>
             </div>
         </div>
@@ -208,25 +279,54 @@
     </div>
 
     <script>
+        // دالة تسجيل الدخول
+        function doLogin() {
+            var host = document.getElementById('host-url').value;
+            var user = document.getElementById('username').value;
+            var pass = document.getElementById('password').value;
+
+            // التحقق من أن الحقول غير فارغة
+            if(host === "" || user === "" || pass === "") {
+                alert("الرجاء تعبئة جميع الحقول (السيرفر، اسم المستخدم، وكلمة المرور)!");
+                return;
+            }
+
+            // إخفاء شاشة الدخول وإظهار لوحة التحكم
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard-screen').style.display = 'flex';
+            
+            // في المستقبل: هنا سيتم استخدام البيانات لجلب القنوات الحقيقية من السيرفر
+        }
+
+        // دالة تسجيل الخروج
+        function doLogout() {
+            // إخفاء لوحة التحكم وإظهار شاشة الدخول مجدداً
+            document.getElementById('dashboard-screen').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+            
+            // تفريغ الحقول
+            document.getElementById('host-url').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // دالة التبديل بين الأقسام
         function showSection(sectionId, element) {
-            // إخفاء كل بلوكات المحتوى
             var blocks = document.querySelectorAll('.content-block');
             blocks.forEach(function(block) {
                 block.style.display = 'none';
             });
-
-            // إظهار القسم الذي تم الضغط عليه
             document.getElementById(sectionId).style.display = 'block';
 
-            // إزالة التحديد النشط من كافة الأزرار
             var buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(function(btn) {
                 btn.classList.remove('active');
             });
-
-            // تفعيل الزر الذي ضغطت عليه حالياً
             element.classList.add('active');
         }
+
+        // إخفاء الداشبورد افتراضياً عند تحميل الصفحة لضمان ظهور شاشة تسجيل الدخول
+        document.getElementById('dashboard-screen').style.display = 'none';
     </script>
 </body>
 </html>
