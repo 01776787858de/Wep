@@ -101,9 +101,14 @@
             background-color: #4338ca;
         }
 
+        .login-btn:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+        }
+
         /* ------------------ لوحة التحكم (الداشبورد) ------------------ */
         #dashboard-screen {
-            display: none; /* مخفية بالبداية حتى يسجل دخول */
+            display: none;
             width: 100%;
             height: 100%;
             display: flex;
@@ -264,7 +269,7 @@
             <div id="movies" class="content-block">
                 <div class="section-title">🎬 مكتبة الأفلام</div>
                 <div class="grid-container">
-                    <div class="card"><div class="card-icon" style="background: #3b0764;">🍿</div><div class="card-title">فيلم أكشن 2026</div><div class="card-meta">سرايم - ساعتان</div></div>
+                    <div class="card"><div class="card-icon" style="background: #3b0764;">🍿</div><div class="card-title">فيلم أكشن 2026</div><div class="card-meta">مترجم - ساعتان</div></div>
                 </div>
             </div>
 
@@ -279,32 +284,68 @@
     </div>
 
     <script>
-        // دالة تسجيل الدخول
-        function doLogin() {
-            var host = document.getElementById('host-url').value;
-            var user = document.getElementById('username').value;
-            var pass = document.getElementById('password').value;
+        // إخفاء الداشبورد افتراضياً
+        document.getElementById('dashboard-screen').style.display = 'none';
 
-            // التحقق من أن الحقول غير فارغة
+        // دالة تسجيل الدخول الحقيقية (تتصل بالسيرفر)
+        async function doLogin() {
+            var host = document.getElementById('host-url').value.trim();
+            var user = document.getElementById('username').value.trim();
+            var pass = document.getElementById('password').value.trim();
+            var loginBtn = document.querySelector('.login-btn');
+
             if(host === "" || user === "" || pass === "") {
-                alert("الرجاء تعبئة جميع الحقول (السيرفر، اسم المستخدم، وكلمة المرور)!");
+                alert("الرجاء تعبئة جميع الحقول!");
                 return;
             }
 
-            // إخفاء شاشة الدخول وإظهار لوحة التحكم
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard-screen').style.display = 'flex';
-            
-            // في المستقبل: هنا سيتم استخدام البيانات لجلب القنوات الحقيقية من السيرفر
+            // إزالة / من آخر الرابط إذا كانت موجودة
+            if (host.endsWith('/')) {
+                host = host.slice(0, -1);
+            }
+
+            // تغيير نص الزر عشان يبين إنه جالس يحمل
+            loginBtn.innerText = "⏳ جاري التحميل...";
+            loginBtn.disabled = true;
+
+            try {
+                // رابط الاتصال المخصص بسيرفرات IPTV (Xtream API)
+                let apiUrl = `${host}/player_api.php?username=${user}&password=${pass}`;
+                
+                // جلب البيانات من السيرفر
+                let response = await fetch(apiUrl);
+                let data = await response.json();
+
+                // التحقق من أن السيرفر رد علينا وأن البيانات صحيحة
+                if (data.user_info && data.user_info.auth === 1) {
+                    // نجاح الدخول!
+                    alert("✅ تم تسجيل الدخول بنجاح! مرحباً: " + data.user_info.username);
+                    
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('dashboard-screen').style.display = 'flex';
+                    
+                    // إرجاع الزر لحالته الطبيعية
+                    loginBtn.innerText = "تسجيل الدخول";
+                    loginBtn.disabled = false;
+
+                } else {
+                    alert("❌ فشل تسجيل الدخول: تأكد من السيرفر، اليوزر، والباسورد.");
+                    loginBtn.innerText = "تسجيل الدخول";
+                    loginBtn.disabled = false;
+                }
+
+            } catch (error) {
+                console.error("تفاصيل الخطأ:", error);
+                alert("⚠️ حدث خطأ في الاتصال بالسيرفر!\nالسبب المحتمل: السيرفر الذي أدخلته يمنع الاتصال المباشر من المتصفح (حماية CORS) أو الرابط خاطئ.");
+                loginBtn.innerText = "تسجيل الدخول";
+                loginBtn.disabled = false;
+            }
         }
 
         // دالة تسجيل الخروج
         function doLogout() {
-            // إخفاء لوحة التحكم وإظهار شاشة الدخول مجدداً
             document.getElementById('dashboard-screen').style.display = 'none';
             document.getElementById('login-screen').style.display = 'flex';
-            
-            // تفريغ الحقول
             document.getElementById('host-url').value = '';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
@@ -313,21 +354,13 @@
         // دالة التبديل بين الأقسام
         function showSection(sectionId, element) {
             var blocks = document.querySelectorAll('.content-block');
-            blocks.forEach(function(block) {
-                block.style.display = 'none';
-            });
+            blocks.forEach(function(block) { block.style.display = 'none'; });
             document.getElementById(sectionId).style.display = 'block';
-
+            
             var buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
+            buttons.forEach(function(btn) { btn.classList.remove('active'); });
             element.classList.add('active');
         }
-
-        // إخفاء الداشبورد افتراضياً عند تحميل الصفحة لضمان ظهور شاشة تسجيل الدخول
-        document.getElementById('dashboard-screen').style.display = 'none';
     </script>
 </body>
 </html>
-
