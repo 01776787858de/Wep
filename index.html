@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة البث المباشر الاحترافية | IPTV</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         :root {
             --bg-main: #0b0f19;
@@ -77,6 +78,7 @@
             border-radius: 8px;
             box-sizing: border-box;
             outline: none;
+            direction: ltr;
         }
 
         .input-group input:focus {
@@ -113,7 +115,6 @@
             height: 100%;
         }
 
-        /* القائمة الجانبية */
         #sidebar {
             width: 260px;
             background-color: var(--bg-sidebar);
@@ -156,11 +157,11 @@
             background-color: #991b1b;
         }
 
-        /* المحتوى الرئيسي */
         #main-content {
             flex: 1;
             padding: 30px;
             overflow-y: auto;
+            position: relative;
         }
 
         .section-title {
@@ -218,10 +219,50 @@
             display: none;
         }
 
+        /* ------------------ مشغل الفيديو (نافذة منبثقة) ------------------ */
+        #video-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #video-container {
+            width: 80%;
+            max-width: 800px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .close-video-btn {
+            margin-bottom: 15px;
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             #dashboard-screen { flex-direction: column; }
             #sidebar { width: auto; height: auto; border-left: none; border-bottom: 1px solid #1e293b; }
             #main-content { padding: 15px; }
+            #video-container { width: 95%; }
         }
     </style>
 </head>
@@ -243,11 +284,18 @@
                 <input type="password" id="password" placeholder="اكتب كلمة المرور">
             </div>
             <button class="login-btn" onclick="doLogin()">تسجيل الدخول</button>
+            <p style="font-size: 12px; color: #64748b; margin-top: 15px;">اكتب "test" في كل الحقول لتجربة اللوحة مباشرة</p>
+        </div>
+    </div>
+
+    <div id="video-modal">
+        <button class="close-video-btn" onclick="closePlayer()">إغلاق الفيديو ❌</button>
+        <div id="video-container">
+            <video id="iptv-player" controls autoplay></video>
         </div>
     </div>
 
     <div id="dashboard-screen">
-        
         <div id="sidebar">
             <div class="sidebar-brand">IPTV Web Hub</div>
             <button class="nav-btn active" onclick="showSection('live', this)">📺 القنوات الحرة</button>
@@ -260,31 +308,46 @@
             <div id="live" class="content-block" style="display: block;">
                 <div class="section-title">📺 القنوات الرياضية الحية</div>
                 <div class="grid-container">
-                    <div class="card"><div class="card-icon">⚽</div><div class="card-title">beIN Sports HD</div><div class="card-meta">جودة 1080p</div></div>
-                    <div class="card"><div class="card-icon">🏆</div><div class="card-title">SSC Sports 1</div><div class="card-meta">جودة 4K</div></div>
+                    <div class="card" onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+                        <div class="card-icon">⚽</div>
+                        <div class="card-title">beIN Sports HD (تجربة)</div>
+                        <div class="card-meta">اضغط للتشغيل</div>
+                    </div>
+                    <div class="card" onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+                        <div class="card-icon">🏆</div>
+                        <div class="card-title">SSC Sports 1 (تجربة)</div>
+                        <div class="card-meta">اضغط للتشغيل</div>
+                    </div>
                 </div>
             </div>
 
             <div id="movies" class="content-block">
                 <div class="section-title">🎬 مكتبة الأفلام</div>
                 <div class="grid-container">
-                    <div class="card"><div class="card-icon" style="background: #3b0764;">🍿</div><div class="card-title">فيلم أكشن 2026</div><div class="card-meta">مترجم - ساعتان</div></div>
+                    <div class="card" onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+                        <div class="card-icon" style="background: #3b0764;">🍿</div>
+                        <div class="card-title">فيلم أكشن (تجربة)</div>
+                        <div class="card-meta">اضغط للتشغيل</div>
+                    </div>
                 </div>
             </div>
 
             <div id="series" class="content-block">
                 <div class="section-title">🍿 المسلسلات</div>
                 <div class="grid-container">
-                    <div class="card"><div class="card-icon" style="background: #1e3a8a;">🎬</div><div class="card-title">مسلسل الفرسان</div><div class="card-meta">الحلقة 1</div></div>
+                    <div class="card" onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+                        <div class="card-icon" style="background: #1e3a8a;">🎬</div>
+                        <div class="card-title">مسلسل (تجربة)</div>
+                        <div class="card-meta">اضغط للتشغيل</div>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-        // إخفاء الداشبورد افتراضياً
         document.getElementById('dashboard-screen').style.display = 'none';
+        var hlsPlayer = null; // متغير لمشغل الفيديو
 
         async function doLogin() {
             var host = document.getElementById('host-url').value.trim();
@@ -297,6 +360,12 @@
                 return;
             }
 
+            if(host.toLowerCase() === "test" && user.toLowerCase() === "test" && pass.toLowerCase() === "test") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard-screen').style.display = 'flex';
+                return;
+            }
+
             if (host.endsWith('/')) {
                 host = host.slice(0, -1);
             }
@@ -305,35 +374,24 @@
             loginBtn.disabled = true;
 
             try {
-                // الرابط الأصلي للسيرفر
                 let apiUrl = `${host}/player_api.php?username=${user}&password=${pass}`;
-                
-                // 🚀 استخدام رابط وسيط (CORS Proxy) لتخطي حماية المتصفح
-                let proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
-                
+                let proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
                 let response = await fetch(proxyUrl);
-                let proxyData = await response.json();
                 
-                // تحويل البيانات النصية اللي رجعها الوسيط إلى JSON
-                let data = JSON.parse(proxyData.contents);
+                if (!response.ok) throw new Error('السيرفر رفض الاتصال.');
+                
+                let data = await response.json();
 
                 if (data.user_info && data.user_info.auth === 1) {
-                    alert("✅ تم تسجيل الدخول بنجاح! مرحباً: " + data.user_info.username);
-                    
+                    alert("✅ تم تسجيل الدخول بنجاح!");
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('dashboard-screen').style.display = 'flex';
-                    
-                    loginBtn.innerText = "تسجيل الدخول";
-                    loginBtn.disabled = false;
                 } else {
-                    alert("❌ فشل تسجيل الدخول: تأكد من السيرفر، اليوزر، والباسورد.");
-                    loginBtn.innerText = "تسجيل الدخول";
-                    loginBtn.disabled = false;
+                    alert("❌ فشل تسجيل الدخول.");
                 }
-
             } catch (error) {
-                console.error("تفاصيل الخطأ:", error);
-                alert("⚠️ لا يزال هناك خطأ في الاتصال! تأكد من أن رابط السيرفر يعمل بشكل صحيح.");
+                alert("⚠️ فشل الاتصال بالسيرفر! جرب وضع (test) للدخول.");
+            } finally {
                 loginBtn.innerText = "تسجيل الدخول";
                 loginBtn.disabled = false;
             }
@@ -356,7 +414,51 @@
             buttons.forEach(function(btn) { btn.classList.remove('active'); });
             element.classList.add('active');
         }
+
+        /* ------------------ دوال تشغيل وإغلاق الفيديو ------------------ */
+        function playStream(url) {
+            var videoModal = document.getElementById('video-modal');
+            var video = document.getElementById('iptv-player');
+            
+            // إظهار نافذة الفيديو
+            videoModal.style.display = 'flex';
+
+            // تدمير المشغل القديم إذا كان يعمل
+            if (hlsPlayer) {
+                hlsPlayer.destroy();
+            }
+
+            // تشغيل الرابط الجديد باستخدام مكتبة HLS.js
+            if (Hls.isSupported()) {
+                hlsPlayer = new Hls();
+                hlsPlayer.loadSource(url);
+                hlsPlayer.attachMedia(video);
+                hlsPlayer.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
+            } 
+            // دعم متصفحات سفاري للآيفون والماك
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            }
+        }
+
+        function closePlayer() {
+            var videoModal = document.getElementById('video-modal');
+            var video = document.getElementById('iptv-player');
+            
+            // إيقاف الفيديو وإخفاء النافذة
+            video.pause();
+            video.src = "";
+            videoModal.style.display = 'none';
+            
+            if (hlsPlayer) {
+                hlsPlayer.destroy();
+            }
+        }
     </script>
 </body>
 </html>
-
