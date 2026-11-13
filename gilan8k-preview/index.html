@@ -11,7 +11,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:16p
 button,input,select{font:inherit}button{cursor:pointer;background:#171319;color:#e9ce88;border:1px solid #71592f;border-radius:10px;padding:10px 14px}button:focus{outline:2px solid var(--g);outline-offset:2px}.primary{background:linear-gradient(135deg,#d8b45e,#8e682b);color:#100d08;font-weight:bold}
 main{max-width:1100px;margin:auto;padding:22px 4vw 45px}.hero{text-align:center;margin:20px 0 28px}.hero h2{margin:0;color:#f0d17d;font-size:clamp(28px,5vw,42px);letter-spacing:3px}.hero p,.muted{color:var(--muted);font-size:13px}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tile{min-height:155px;border-radius:17px;background:linear-gradient(145deg,#2b2231,#17141b);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}.tile.active{border:2px solid var(--g);box-shadow:0 0 0 3px #dfb95722}.ico{width:62px;height:62px;border:2px solid var(--g);border-radius:50%;display:grid;place-items:center;background:#050505;color:var(--g);font-size:29px}.tile strong{font-size:18px}.tile small{color:#aaa;font-size:11px}
-.panel{margin-top:24px;padding:18px;background:#151218;border:1px solid var(--line);border-radius:16px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.panel h3{margin:0;color:var(--g);font-size:21px}.empty{text-align:center;padding:30px 8px;color:#aaa}.empty b{display:block;font-size:32px;color:var(--g);margin-bottom:8px}
+.panel{margin-top:24px;padding:18px;background:#151218;border:1px solid var(--line);border-radius:16px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.panel h3{margin:0;color:var(--g);font-size:21px}.catalog-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}.catalog-tools input{flex:1;min-width:180px}.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;margin-top:16px}.media-card{background:linear-gradient(145deg,#29212f,#17141b);border:1px solid var(--line);border-radius:13px;padding:12px;min-width:0}.media-art{height:105px;border-radius:9px;background:radial-gradient(circle,#49351d,#090909 70%);display:grid;place-items:center;color:var(--g);font-size:34px;margin-bottom:10px;overflow:hidden}.media-art img{width:100%;height:100%;object-fit:cover}.media-card strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.media-card small{display:block;color:#aaa;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.media-card button{width:100%;margin-top:10px}.empty{text-align:center;padding:34px 8px;color:#aaa}.empty b{display:block;font-size:32px;color:var(--g);margin-bottom:8px}.player{margin-top:18px;background:#050505;border:1px solid var(--line);border-radius:12px;padding:12px}.player video{width:100%;max-height:360px;background:#000;border-radius:8px}.player strong{display:block;color:var(--g);margin-bottom:10px}
 .admin{display:none}.admin.show{display:block}.home.hide{display:none}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;color:#e4ce96;font-size:13px;margin:12px 0 6px}input,select{width:100%;padding:12px;background:#0d0b0e;border:1px solid #594a5b;border-radius:9px;color:#fff}.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}.entry{padding:12px;background:#241d29;border:1px solid var(--line);border-radius:10px}.entry small{display:block;color:#aaa;margin-top:6px}.note{margin-top:14px;padding:12px;border:1px solid #5a4828;background:#201b13;color:#e9d7a7;border-radius:10px;font-size:13px;line-height:1.6}
 footer{text-align:center;color:#777;font-size:11px;padding:24px}
 @media(max-width:620px){header{padding:12px}.brand h1{font-size:18px}.logo{width:44px;height:44px}main{padding:18px 13px}.cards{gap:8px}.tile{min-height:125px}.ico{width:52px;height:52px;font-size:24px}.tile strong{font-size:15px}.formgrid{grid-template-columns:1fr}}
@@ -33,11 +33,57 @@ footer{text-align:center;color:#777;font-size:11px;padding:24px}
 const $=id=>document.getElementById(id),key='gilan8k_online_v1';let db=JSON.parse(localStorage.getItem(key)||'{"pls":[],"devs":[]}'),kind='live';
 const names={live:'مباشر',movies:'أفلام',series:'مسلسلات'};function save(){localStorage.setItem(key,JSON.stringify(db));render()}
 document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tile').forEach(x=>x.classList.remove('active'));b.classList.add('active');kind=b.dataset.kind;$('title').textContent=names[kind];content()});
+$('catalogSearch').addEventListener('input',content);$('reloadList').onclick=()=>loadPlaylist(true);
 $('adminBtn').onclick=()=>{$('home').classList.add('hide');$('admin').classList.add('show');render()};
 $('backBtn').onclick=()=>{$('admin').classList.remove('show');$('home').classList.remove('hide')};
 $('addpl').onclick=()=>{let n=$('plname').value.trim(),u=$('plurl').value.trim();if(!n)return alert('أدخل اسم القائمة');if(u&&!/^https?:\/\//i.test(u))return alert('الرابط غير صحيح');db.pls.push({id:Date.now()+'p',n,u});$('plname').value='';$('plurl').value='';save()};
 $('adddev').onclick=()=>{let n=$('devname').value.trim(),m=$('mac').value.trim(),c=$('code').value.trim();if(!n||!m||!c)return alert('أكمل بيانات الجهاز');if(!/^([0-9a-f]{2}:){5}[0-9a-f]{2}$/i.test(m))return alert('صيغة MAC غير صحيحة');db.devs.push({id:Date.now()+'d',n,m,c,s:$('state').value,p:''});$('devname').value='';$('mac').value='';$('code').value='';save()};
 $('assign').onclick=()=>{let d=db.devs.find(x=>x.id===$('devsel').value),p=db.pls.find(x=>x.id===$('plsel').value);if(!d||!p)return alert('أضف جهازاً وقائمة أولاً');d.p=p.id;save();alert('تم الربط محلياً في المعاينة')};
-function content(){let d=db.devs.find(x=>x.s==='Connected'&&x.p),p=d&&db.pls.find(x=>x.id===d.p);$('status').textContent=p?'Playlist: '+p.n:'لا توجد قائمة مرتبطة';$('content').innerHTML=p?'<b>✓</b>تم ربط القائمة: '+p.n+'<br><small>سيتم تحميل المحتوى بعد تجهيز الخادم</small>':'<b>◇</b>لا توجد عناصر بعد<br><small>تُدار قوائم التشغيل من لوحة الإدارة فقط</small>'}
-function render(){$('pls').innerHTML=db.pls.map(p=>'<div class="entry"><b>'+p.n+'</b><small>'+(p.u?'رابط محفوظ':'بدون رابط')+'</small></div>').join('')||'<span class="muted">لا توجد قوائم</span>';$('devs').innerHTML=db.devs.map(d=>'<div class="entry"><b>'+d.n+'</b><small dir="ltr">'+d.m+'</small><small>'+d.s+'</small></div>').join('')||'<span class="muted">لا توجد أجهزة</span>';$('devsel').innerHTML=db.devs.map(d=>'<option value="'+d.id+'">'+d.n+'</option>').join('');$('plsel').innerHTML=db.pls.map(p=>'<option value="'+p.id+'">'+p.n+'</option>').join('');$('links').innerHTML=db.devs.map(d=>{let p=db.pls.find(x=>x.id===d.p);return '<div class="entry">'+d.n+'<small>'+(p?p.n:'غير مربوط')+'</small></div>'}).join('');content()}render();
+
+let playlistItems=[],playlistLoadedFor='';
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function classify(item){
+ const g=(item.group||'').toLowerCase(),n=item.name.toLowerCase();
+ if(/series|مسلسل|مسلسلات|episode|season|\bseries\b/.test(g+' '+n))return 'series';
+ if(/movie|movies|film|أفلام|فيلم|سينما|vod/.test(g+' '+n))return 'movies';
+ if(/live|مباشر|قنوات|sports|news|kids|منوعات/.test(g+' '+n))return 'live';
+ return 'live';
+}
+function content(){
+ const q=($('catalogSearch')?.value||'').trim().toLowerCase();
+ const items=playlistItems.filter(x=>classify(x)===kind&&(!q||(x.name+' '+x.group).toLowerCase().includes(q)));
+ const root=$('content');
+ if(!root)return;
+ if(!playlistItems.length){root.className='empty';root.innerHTML='<b>◇</b>لا توجد قائمة تشغيل محمّلة<br><small>أضف رابط M3U تملك حق استخدامه من لوحة الإدارة، ثم اربطه بجهاز</small>';return}
+ root.className='catalog';
+ if(!items.length){root.className='empty';root.innerHTML='<b>⌕</b>لا توجد نتائج في قسم '+esc(names[kind])+'<br><small>جرّب قسماً آخر أو غيّر كلمة البحث</small>';return}
+ root.innerHTML=items.map((x,i)=>'<article class="media-card"><div class="media-art">'+(x.logo?'<img src="'+esc(x.logo)+'" alt="" loading="lazy" onerror="this.parentElement.textContent=\'▶\'">':'▶')+'</div><strong title="'+esc(x.name)+'">'+esc(x.name)+'</strong><small>'+esc(x.group||names[kind])+'</small><button data-play="'+i+'">تشغيل</button></article>').join('');
+ root.querySelectorAll('[data-play]').forEach(btn=>btn.onclick=()=>playItem(items[Number(btn.dataset.play)]));
+}
+function playItem(item){
+ const player=$('player'),video=$('video');
+ $('playingTitle').textContent=item.name;player.hidden=false;video.src=item.url;video.play().catch(()=>{});
+ player.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+async function loadPlaylist(force=false){
+ const d=db.devs.find(x=>x.s==='Connected'&&x.p),p=d&&db.pls.find(x=>x.id===d.p);
+ if(!p||!p.u){playlistItems=[];$('status').textContent='لا توجد قائمة مرتبطة بجهاز متصل';content();return}
+ if(!force&&playlistLoadedFor===p.id&&playlistItems.length){content();return}
+ $('status').textContent='جارٍ تحميل القائمة…';playlistLoadedFor=p.id;
+ try{
+  const response=await fetch(p.u,{cache:'no-store'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const raw=await response.text();
+  if(!raw.trim().startsWith('#EXTM3U'))throw new Error('الرابط لا يبدو كملف M3U');
+  const lines=raw.split(/\r?\n/);let current=null;playlistItems=[];
+  for(const line0 of lines){const line=line0.trim();if(line.startsWith('#EXTINF:')){
+    const nameMatch=line.match(/,(.*)$/);const attr=k=>{const m=line.match(new RegExp(k+'="([^"]*)"','i'));return m?m[1]:''};
+    current={name:(nameMatch?nameMatch[1]:'قناة').trim(),group:attr('group-title'),logo:attr('tvg-logo'),url:''};
+   }else if(line&&!line.startsWith('#')&&current){current.url=line;playlistItems.push(current);current=null}}
+  $('status').textContent=playlistItems.length+' عنصر محمّل';
+  content();
+ }catch(e){playlistItems=[];$('status').textContent='تعذّر تحميل القائمة';$('content').className='empty';$('content').innerHTML='<b>!</b>لم نتمكن من قراءة ملف Playlist<br><small>'+esc(e.message)+' — قد يمنع الخادم القراءة بسبب CORS. استخدم رابط M3U مباشر يسمح بالوصول من المتصفح.</small>'}
+}
+
+function render(){$('pls').innerHTML=db.pls.map(p=>'<div class="entry"><b>'+p.n+'</b><small>'+(p.u?'رابط محفوظ':'بدون رابط')+'</small></div>').join('')||'<span class="muted">لا توجد قوائم</span>';$('devs').innerHTML=db.devs.map(d=>'<div class="entry"><b>'+d.n+'</b><small dir="ltr">'+d.m+'</small><small>'+d.s+'</small></div>').join('')||'<span class="muted">لا توجد أجهزة</span>';$('devsel').innerHTML=db.devs.map(d=>'<option value="'+d.id+'">'+d.n+'</option>').join('');$('plsel').innerHTML=db.pls.map(p=>'<option value="'+p.id+'">'+p.n+'</option>').join('');$('links').innerHTML=db.devs.map(d=>{let p=db.pls.find(x=>x.id===d.p);return '<div class="entry">'+d.n+'<small>'+(p?p.n:'غير مربوط')+'</small></div>'}).join('');syncPlaylist()}render();
 </script></body></html>
