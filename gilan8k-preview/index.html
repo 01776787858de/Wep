@@ -2,89 +2,114 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909">
-<title>GILAN 8K — معاينة</title>
+<title>GILAN 8K — Premium TV Player</title>
 <style>
 :root{--g:#dfb957;--bg:#090909;--p:#201b25;--line:#49394b;--muted:#aaa}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#302519,#0b0a0a 55%,#050505);color:#fff;font-family:Arial,sans-serif;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;padding:16px 4vw;border-bottom:1px solid #45351e;background:#090909dd;position:sticky;top:0}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 4vw;border-bottom:1px solid #45351e;background:#090909ed;position:sticky;top:0;z-index:5}
 .brand{display:flex;align-items:center;gap:12px}.logo{width:50px;height:50px;border:3px solid var(--g);border-radius:50%;display:grid;place-items:center;color:var(--g);font-weight:bold;background:#000;box-shadow:0 0 16px #dfb95755}.brand h1{margin:0;color:var(--g);letter-spacing:2px;font-size:22px}.brand small{display:block;color:#aaa;font-size:10px;letter-spacing:2px;margin-top:4px}
-button,input,select{font:inherit}button{cursor:pointer;background:#171319;color:#e9ce88;border:1px solid #71592f;border-radius:10px;padding:10px 14px}button:focus{outline:2px solid var(--g);outline-offset:2px}.primary{background:linear-gradient(135deg,#d8b45e,#8e682b);color:#100d08;font-weight:bold}
+button,input,select{font:inherit}button{cursor:pointer;background:#171319;color:#e9ce88;border:1px solid #71592f;border-radius:10px;padding:10px 14px}button:focus,input:focus,select:focus{outline:2px solid var(--g);outline-offset:2px}.primary{background:linear-gradient(135deg,#d8b45e,#8e682b);color:#100d08;font-weight:bold}
 main{max-width:1100px;margin:auto;padding:22px 4vw 45px}.hero{text-align:center;margin:20px 0 28px}.hero h2{margin:0;color:#f0d17d;font-size:clamp(28px,5vw,42px);letter-spacing:3px}.hero p,.muted{color:var(--muted);font-size:13px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tile{min-height:155px;border-radius:17px;background:linear-gradient(145deg,#2b2231,#17141b);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}.tile.active{border:2px solid var(--g);box-shadow:0 0 0 3px #dfb95722}.ico{width:62px;height:62px;border:2px solid var(--g);border-radius:50%;display:grid;place-items:center;background:#050505;color:var(--g);font-size:29px}.tile strong{font-size:18px}.tile small{color:#aaa;font-size:11px}
-.panel{margin-top:24px;padding:18px;background:#151218;border:1px solid var(--line);border-radius:16px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.panel h3{margin:0;color:var(--g);font-size:21px}.catalog-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}.catalog-tools input{flex:1;min-width:180px}.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;margin-top:16px}.media-card{background:linear-gradient(145deg,#29212f,#17141b);border:1px solid var(--line);border-radius:13px;padding:12px;min-width:0}.media-art{height:105px;border-radius:9px;background:radial-gradient(circle,#49351d,#090909 70%);display:grid;place-items:center;color:var(--g);font-size:34px;margin-bottom:10px;overflow:hidden}.media-art img{width:100%;height:100%;object-fit:cover}.media-card strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.media-card small{display:block;color:#aaa;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.media-card button{width:100%;margin-top:10px}.empty{text-align:center;padding:34px 8px;color:#aaa}.empty b{display:block;font-size:32px;color:var(--g);margin-bottom:8px}.player{margin-top:18px;background:#050505;border:1px solid var(--line);border-radius:12px;padding:12px}.player video{width:100%;max-height:360px;background:#000;border-radius:8px}.player strong{display:block;color:var(--g);margin-bottom:10px}
-.admin{display:none}.admin.show{display:block}.home.hide{display:none}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;color:#e4ce96;font-size:13px;margin:12px 0 6px}input,select{width:100%;padding:12px;background:#0d0b0e;border:1px solid #594a5b;border-radius:9px;color:#fff}.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}.entry{padding:12px;background:#241d29;border:1px solid var(--line);border-radius:10px}.entry small{display:block;color:#aaa;margin-top:6px}.note{margin-top:14px;padding:12px;border:1px solid #5a4828;background:#201b13;color:#e9d7a7;border-radius:10px;font-size:13px;line-height:1.6}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.tile{min-height:155px;border-radius:17px;background:linear-gradient(145deg,#2b2231,#17141b);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}.tile.active{border:2px solid var(--g);box-shadow:0 0 0 3px #dfb95722}.ico{width:62px;height:62px;border:2px solid var(--g);border-radius:50%;display:grid;place-items:center;background:#050505;color:var(--g);font-size:29px}
+.panel{margin-top:24px;padding:18px;background:#151218;border:1px solid var(--line);border-radius:16px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.panel h3{margin:0;color:var(--g);font-size:21px}.catalog-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}.catalog-tools input{flex:1;min-width:180px}.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;margin-top:16px}.media-card,.entry{background:linear-gradient(145deg,#29212f,#17141b);border:1px solid var(--line);border-radius:13px;padding:12px;min-width:0}.media-art{height:105px;border-radius:9px;background:radial-gradient(circle,#49351d,#090909 70%);display:grid;place-items:center;color:var(--g);font-size:34px;margin-bottom:10px;overflow:hidden}.media-art img{width:100%;height:100%;object-fit:cover}.media-card strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.media-card small,.entry small{display:block;color:#aaa;margin-top:6px;overflow-wrap:anywhere}.media-card button{width:100%;margin-top:10px}.empty{text-align:center;padding:34px 8px;color:#aaa}.empty b{display:block;font-size:32px;color:var(--g);margin-bottom:8px}.player{margin-top:18px;background:#050505;border:1px solid var(--line);border-radius:12px;padding:12px}.player video{width:100%;max-height:360px;background:#000;border-radius:8px}.player strong{display:block;color:var(--g);margin-bottom:10px}
+.admin,.settings{display:none}.admin.show,.settings.show{display:block}.home.hide{display:none}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;color:#e4ce96;font-size:13px;margin:12px 0 6px}input,select{width:100%;padding:12px;background:#0d0b0e;border:1px solid #594a5b;border-radius:9px;color:#fff}.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}.note{margin-top:14px;padding:12px;border:1px solid #5a4828;background:#201b13;color:#e9d7a7;border-radius:10px;font-size:13px;line-height:1.7}
+.settings-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}.setting{min-height:76px;text-align:right;display:flex;align-items:center;gap:12px;background:#2a2331;border:1px solid #352b3d;border-radius:12px;color:#eee;padding:14px}.setting .sym{font-size:22px;color:#fff;min-width:28px;text-align:center}.setting:hover{border-color:var(--g);background:#33283a}.setting.danger{border-color:#69403d}.setting-info{grid-column:1/-1;text-align:center;color:#eee;line-height:1.8;padding:20px}.setting-info b{color:var(--g)}.subpage{display:none}.subpage.show{display:block}.backline{display:flex;align-items:center;gap:14px;margin-bottom:18px}.backline h2{margin:auto;color:#eee;font-size:22px}.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;background:#211b27;border:1px solid var(--line);border-radius:10px;margin:10px 0}.toggle input{width:22px;height:22px;accent-color:#d8b45e}.setting-row{padding:12px 0;border-bottom:1px solid #382e3d}.setting-row:last-child{border:0}
 footer{text-align:center;color:#777;font-size:11px;padding:24px}
-@media(max-width:620px){header{padding:12px}.brand h1{font-size:18px}.logo{width:44px;height:44px}main{padding:18px 13px}.cards{gap:8px}.tile{min-height:125px}.ico{width:52px;height:52px;font-size:24px}.tile strong{font-size:15px}.formgrid{grid-template-columns:1fr}}
+@media(max-width:760px){.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){header{padding:12px}.brand h1{font-size:18px}.logo{width:44px;height:44px}main{padding:18px 13px}.cards{gap:8px}.tile{min-height:125px}.ico{width:52px;height:52px;font-size:24px}.formgrid{grid-template-columns:1fr}.setting{font-size:13px;padding:11px;gap:8px}.settings-grid{gap:8px}}
 </style></head><body>
-<header><div class="brand"><div class="logo">AG</div><div><h1>GILAN 8K</h1><small>PREMIUM TV PLAYER</small></div></div><button id="adminBtn">لوحة الإدارة</button></header>
+<header><div class="brand"><div class="logo">AG</div><div><h1>GILAN 8K</h1><small>PREMIUM TV PLAYER</small></div></div><div style="display:flex;gap:8px"><button id="settingsBtn">الإعدادات</button><button id="adminBtn">لوحة الإدارة</button></div></header>
 <main>
 <section class="home" id="home"><div class="hero"><h2>GILAN 8K</h2><p>تجربة المشغل — أسود وذهبي</p></div>
 <div class="cards">
 <button class="tile active" data-kind="live"><span class="ico">▣</span><strong>مباشر</strong><small>LIVE TV</small></button>
 <button class="tile" data-kind="movies"><span class="ico">▤</span><strong>أفلام</strong><small>MOVIES</small></button>
 <button class="tile" data-kind="series"><span class="ico">▥</span><strong>مسلسلات</strong><small>SERIES</small></button>
-</div><section class="panel"><div class="panelhead"><h3 id="title">مباشر</h3><span class="muted" id="status">لا توجد قائمة مرتبطة</span></div><div class="empty" id="content"><b>◇</b>لا توجد عناصر بعد<br><small>تُدار قوائم التشغيل من لوحة الإدارة فقط</small></div></section></section>
-<section class="admin" id="admin"><div class="panelhead"><h2 style="color:var(--g)">لوحة إدارة GILAN 8K</h2><button id="backBtn">العودة</button></div><div class="note">هذه معاينة أمامية. البيانات تُحفظ في هذا المتصفح فقط؛ لا يوجد خادم أو تفعيل حقيقي حتى الآن. استخدم فقط روابط المحتوى التي تملك حق توزيعها.</div>
+</div><section class="panel"><div class="panelhead"><h3 id="title">مباشر</h3><span class="muted" id="status">لا توجد قائمة مرتبطة</span></div><div class="catalog-tools"><input id="catalogSearch" placeholder="ابحث في المحتوى..." aria-label="بحث"><button id="reloadList">تحديث القائمة</button></div><div class="empty" id="content"><b>◇</b>لا توجد قائمة تشغيل محمّلة</div><div class="player" id="player" hidden><strong id="playingTitle"></strong><video id="video" controls playsinline></video></div></section></section>
+<section class="settings" id="settings"><div class="backline"><button id="settingsBack">↩ رجوع</button><h2>الإعدادات</h2><span style="width:60px"></span></div>
+<div class="settings-grid">
+<button class="setting" data-action="add-playlist"><span class="sym">▤</span>إضافة قائمة التشغيل</button>
+<button class="setting" data-action="parental"><span class="sym">♙</span>مراقبة أهلية</button>
+<button class="setting" data-action="manage-playlists"><span class="sym">▣</span>تغيير قائمة التشغيل</button>
+<button class="setting" data-action="language"><span class="sym">文</span>تغيير اللغة</button>
+<button class="setting" data-action="theme"><span class="sym">❖</span>تغيير الواجهة أو التصميم</button>
+<button class="setting" data-action="hide-live"><span class="sym">◉</span>إخفاء فئات مباشر</button>
+<button class="setting" data-action="hide-vod"><span class="sym">◉</span>إخفاء فئات VOD</button>
+<button class="setting" data-action="hide-series"><span class="sym">◉</span>إخفاء فئات المسلسلات</button>
+<button class="setting" data-action="history"><span class="sym">▤</span>Clear History Channels</button>
+<button class="setting" data-action="clear-movies"><span class="sym">▤</span>مسح بيانات الأفلام</button>
+<button class="setting" data-action="clear-series"><span class="sym">▤</span>مسح بيانات المسلسلات</button>
+<button class="setting" data-action="sort"><span class="sym">A↓</span>فرز القناة مباشر</button>
+<button class="setting" data-action="format"><span class="sym">●</span>Live Stream Format</button>
+<button class="setting" data-action="external"><span class="sym">▷</span>المشغلات الخارجية</button>
+<button class="setting" data-action="auto"><span class="sym">◉</span>التشغيل التلقائي</button>
+<button class="setting" data-action="time"><span class="sym">◷</span>تنسيق الوقت</button>
+<button class="setting" data-action="subtitle"><span class="sym">▤</span>إعدادات الترجمة</button>
+<button class="setting" data-action="device"><span class="sym">▣</span>Select Device Type</button>
+<button class="setting" data-action="update"><span class="sym">⇩</span>تحديث الآن</button>
+<div class="setting-info">GILAN 8K<br><b>معاينة تجريبية</b><br><small>لا يستطيع متصفح الويب قراءة MAC الحقيقي للجهاز. ستُضاف آلية التفعيل الآمنة في نسخة التطبيق الأصلية.</small></div>
+</div>
+<div class="panel subpage" id="settingDetail"><div class="backline"><button id="detailBack">↩ رجوع</button><h3 id="detailTitle">الإعداد</h3></div><div id="detailBody"></div></div>
+</section>
+<section class="admin" id="admin"><div class="panelhead"><h2 style="color:var(--g)">لوحة إدارة GILAN 8K</h2><button id="backBtn">العودة</button></div><div class="note">هذه معاينة أمامية. البيانات تُحفظ في هذا المتصفح فقط؛ لا يوجد خادم أو تفعيل حقيقي حتى الآن. استخدم فقط قوائم وروابط المحتوى التي تملك حق استخدامها.</div>
 <div class="panel"><h3>إضافة قائمة تشغيل</h3><div class="formgrid"><div><label>اسم القائمة</label><input id="plname" placeholder="قائمة العائلة"></div><div><label>رابط M3U القانوني</label><input id="plurl" type="url" placeholder="https://..."></div></div><button class="primary" id="addpl" style="margin-top:14px">حفظ القائمة</button><div class="rows" id="pls"></div></div>
-<div class="panel"><h3>تسجيل جهاز تجريبي</h3><div class="formgrid"><div><label>اسم الجهاز</label><input id="devname" placeholder="Samsung TV"></div><div><label>MAC Address</label><input id="mac" dir="ltr" placeholder="AA:BB:CC:DD:EE:FF"></div><div><label>كود التفعيل</label><input id="code" dir="ltr" placeholder="123456"></div><div><label>الحالة</label><select id="state"><option>Connected</option><option>Disabled</option><option>Expired</option></select></div></div><button class="primary" id="adddev" style="margin-top:14px">إضافة جهاز</button><div class="rows" id="devs"></div><div class="note">عنوان MAC وحده ليس مصادقة آمنة. النسخة الحقيقية ستستخدم رمز تفعيل عشوائياً وخادماً آمناً.</div></div>
+<div class="panel"><h3>تسجيل جهاز تجريبي</h3><div class="formgrid"><div><label>اسم الجهاز</label><input id="devname" placeholder="Android TV"></div><div><label>MAC Address (معرّف تجريبي)</label><input id="mac" dir="ltr" placeholder="AA:BB:CC:DD:EE:FF"></div><div><label>كود التفعيل التجريبي</label><input id="code" dir="ltr" placeholder="123456"></div><div><label>الحالة</label><select id="state"><option>Connected</option><option>Disabled</option><option>Expired</option></select></div></div><button class="primary" id="adddev" style="margin-top:14px">إضافة جهاز</button><div class="rows" id="devs"></div></div>
 <div class="panel"><h3>ربط القائمة بالجهاز</h3><label>الجهاز</label><select id="devsel"></select><label>قائمة التشغيل</label><select id="plsel"></select><button class="primary" id="assign" style="margin-top:14px">حفظ الربط</button><div class="rows" id="links"></div></div></section>
-</main><footer>GILAN 8K • Online Preview • MVP</footer>
+</main><footer>GILAN 8K • Online Preview</footer>
 <script>
-const $=id=>document.getElementById(id),key='gilan8k_online_v1';let db=JSON.parse(localStorage.getItem(key)||'{"pls":[],"devs":[]}'),kind='live';
-const names={live:'مباشر',movies:'أفلام',series:'مسلسلات'};function save(){localStorage.setItem(key,JSON.stringify(db));render()}
+const $=id=>document.getElementById(id),key='gilan8k_online_v1',prefKey='gilan8k_settings_v1';
+let db;try{db=JSON.parse(localStorage.getItem(key)||'{"pls":[],"devs":[]}')}catch{db={pls:[],devs:[]}}
+let prefs;try{prefs=JSON.parse(localStorage.getItem(prefKey)||'{}')}catch{prefs={}}
+let kind='live',playlistItems=[],history=[];
+const names={live:'مباشر',movies:'أفلام',series:'مسلسلات'};
+function save(){localStorage.setItem(key,JSON.stringify(db));render()}
+function savePrefs(){localStorage.setItem(prefKey,JSON.stringify(prefs))}
+function show(section){['home','admin','settings'].forEach(id=>$(id).classList.toggle(id===section?'show':'hide',id!=='home'));if(section==='home'){$('home').classList.remove('hide');$('admin').classList.remove('show');$('settings').classList.remove('show')}if(section==='admin')render()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tile').forEach(x=>x.classList.remove('active'));b.classList.add('active');kind=b.dataset.kind;$('title').textContent=names[kind];content()});
 $('catalogSearch').addEventListener('input',content);$('reloadList').onclick=()=>loadPlaylist(true);
-$('adminBtn').onclick=()=>{$('home').classList.add('hide');$('admin').classList.add('show');render()};
-$('backBtn').onclick=()=>{$('admin').classList.remove('show');$('home').classList.remove('hide')};
+$('settingsBtn').onclick=()=>show('settings');$('adminBtn').onclick=()=>show('admin');$('backBtn').onclick=()=>show('home');$('settingsBack').onclick=()=>show('home');
 $('addpl').onclick=()=>{let n=$('plname').value.trim(),u=$('plurl').value.trim();if(!n)return alert('أدخل اسم القائمة');if(u&&!/^https?:\/\//i.test(u))return alert('الرابط غير صحيح');db.pls.push({id:Date.now()+'p',n,u});$('plname').value='';$('plurl').value='';save()};
 $('adddev').onclick=()=>{let n=$('devname').value.trim(),m=$('mac').value.trim(),c=$('code').value.trim();if(!n||!m||!c)return alert('أكمل بيانات الجهاز');if(!/^([0-9a-f]{2}:){5}[0-9a-f]{2}$/i.test(m))return alert('صيغة MAC غير صحيحة');db.devs.push({id:Date.now()+'d',n,m,c,s:$('state').value,p:''});$('devname').value='';$('mac').value='';$('code').value='';save()};
 $('assign').onclick=()=>{let d=db.devs.find(x=>x.id===$('devsel').value),p=db.pls.find(x=>x.id===$('plsel').value);if(!d||!p)return alert('أضف جهازاً وقائمة أولاً');d.p=p.id;save();alert('تم الربط محلياً في المعاينة')};
-
-let playlistItems=[],playlistLoadedFor='';
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function classify(item){
- const g=(item.group||'').toLowerCase(),n=item.name.toLowerCase();
- if(/series|مسلسل|مسلسلات|episode|season|\bseries\b/.test(g+' '+n))return 'series';
- if(/movie|movies|film|أفلام|فيلم|سينما|vod/.test(g+' '+n))return 'movies';
- if(/live|مباشر|قنوات|sports|news|kids|منوعات/.test(g+' '+n))return 'live';
- return 'live';
-}
+function classify(x){let s=((x.group||'')+' '+x.name).toLowerCase();if(/series|مسلسل|مسلسلات|episode|season/.test(s))return'series';if(/movie|movies|film|أفلام|فيلم|سينما|vod/.test(s))return'movies';return'live'}
 function content(){
- const q=($('catalogSearch')?.value||'').trim().toLowerCase();
+ const q=$('catalogSearch').value.trim().toLowerCase(),root=$('content');
+ if(prefs['hide-'+kind]){root.className='empty';root.innerHTML='<b>◉</b>هذا القسم مخفي من الإعدادات';return}
  const items=playlistItems.filter(x=>classify(x)===kind&&(!q||(x.name+' '+x.group).toLowerCase().includes(q)));
- const root=$('content');
- if(!root)return;
- if(!playlistItems.length){root.className='empty';root.innerHTML='<b>◇</b>لا توجد قائمة تشغيل محمّلة<br><small>أضف رابط M3U تملك حق استخدامه من لوحة الإدارة، ثم اربطه بجهاز</small>';return}
- root.className='catalog';
- if(!items.length){root.className='empty';root.innerHTML='<b>⌕</b>لا توجد نتائج في قسم '+esc(names[kind])+'<br><small>جرّب قسماً آخر أو غيّر كلمة البحث</small>';return}
- root.innerHTML=items.map((x,i)=>'<article class="media-card"><div class="media-art">'+(x.logo?'<img src="'+esc(x.logo)+'" alt="" loading="lazy" onerror="this.parentElement.textContent=\'▶\'">':'▶')+'</div><strong title="'+esc(x.name)+'">'+esc(x.name)+'</strong><small>'+esc(x.group||names[kind])+'</small><button data-play="'+i+'">تشغيل</button></article>').join('');
+ if(!playlistItems.length){root.className='empty';root.innerHTML='<b>◇</b>لا توجد قائمة تشغيل محمّلة<br><small>أضف قائمة M3U قانونية واربطها بجهاز من لوحة الإدارة</small>';return}
+ if(!items.length){root.className='empty';root.innerHTML='<b>⌕</b>لا توجد نتائج في قسم '+names[kind];return}
+ root.className='catalog';if(prefs.sort==='az')items.sort((a,b)=>a.name.localeCompare(b.name));
+ root.innerHTML=items.map((x,i)=>'<article class="media-card"><div class="media-art">'+(x.logo?'<img src="'+esc(x.logo)+'" alt="" loading="lazy" onerror="this.parentElement.textContent=\\'▶\\'">':'▶')+'</div><strong>'+esc(x.name)+'</strong><small>'+esc(x.group||names[kind])+'</small><button data-play="'+i+'">تشغيل</button></article>').join('');
  root.querySelectorAll('[data-play]').forEach(btn=>btn.onclick=()=>playItem(items[Number(btn.dataset.play)]));
 }
-function playItem(item){
- const player=$('player'),video=$('video');
- $('playingTitle').textContent=item.name;player.hidden=false;video.src=item.url;video.play().catch(()=>{});
- player.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-async function loadPlaylist(force=false){
+function playItem(item){$('playingTitle').textContent=item.name;$('player').hidden=false;$('video').src=item.url;history.unshift(item.name);history=history.slice(0,100);$('video').play().catch(()=>{});$('player').scrollIntoView({behavior:'smooth',block:'nearest'})}
+async function loadPlaylist(){
  const d=db.devs.find(x=>x.s==='Connected'&&x.p),p=d&&db.pls.find(x=>x.id===d.p);
  if(!p||!p.u){playlistItems=[];$('status').textContent='لا توجد قائمة مرتبطة بجهاز متصل';content();return}
- if(!force&&playlistLoadedFor===p.id&&playlistItems.length){content();return}
- $('status').textContent='جارٍ تحميل القائمة…';playlistLoadedFor=p.id;
- try{
-  const response=await fetch(p.u,{cache:'no-store'});
-  if(!response.ok)throw new Error('HTTP '+response.status);
-  const raw=await response.text();
-  if(!raw.trim().startsWith('#EXTM3U'))throw new Error('الرابط لا يبدو كملف M3U');
-  const lines=raw.split(/\r?\n/);let current=null;playlistItems=[];
-  for(const line0 of lines){const line=line0.trim();if(line.startsWith('#EXTINF:')){
-    const nameMatch=line.match(/,(.*)$/);const attr=k=>{const m=line.match(new RegExp(k+'="([^"]*)"','i'));return m?m[1]:''};
-    current={name:(nameMatch?nameMatch[1]:'قناة').trim(),group:attr('group-title'),logo:attr('tvg-logo'),url:''};
-   }else if(line&&!line.startsWith('#')&&current){current.url=line;playlistItems.push(current);current=null}}
-  $('status').textContent=playlistItems.length+' عنصر محمّل';
-  content();
- }catch(e){playlistItems=[];$('status').textContent='تعذّر تحميل القائمة';$('content').className='empty';$('content').innerHTML='<b>!</b>لم نتمكن من قراءة ملف Playlist<br><small>'+esc(e.message)+' — قد يمنع الخادم القراءة بسبب CORS. استخدم رابط M3U مباشر يسمح بالوصول من المتصفح.</small>'}
+ $('status').textContent='جارٍ تحميل القائمة…';
+ try{const res=await fetch(p.u,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const raw=await res.text();if(!raw.trim().startsWith('#EXTM3U'))throw Error('الرابط ليس ملف M3U');let cur=null;playlistItems=[];for(const l0 of raw.split(/\\r?\\n/)){let l=l0.trim();if(l.startsWith('#EXTINF:')){let nm=l.match(/,(.*)$/),attr=k=>{let m=l.match(new RegExp(k+'="([^"]*)"','i'));return m?m[1]:''};cur={name:(nm?nm[1]:'عنصر').trim(),group:attr('group-title'),logo:attr('tvg-logo')}}else if(l&&!l.startsWith('#')&&cur){cur.url=l;playlistItems.push(cur);cur=null}}$('status').textContent=playlistItems.length+' عنصر';content()}
+ catch(e){playlistItems=[];$('status').textContent='تعذّر تحميل القائمة';$('content').className='empty';$('content').innerHTML='<b>!</b>'+esc(e.message)+'<br><small>قد يمنع الخادم القراءة بسبب CORS. استخدم رابطاً مباشراً يسمح بالوصول من المتصفح.</small>'}
 }
-
-function syncPlaylist(){loadPlaylist()}
-function render(){$('pls').innerHTML=db.pls.map(p=>'<div class="entry"><b>'+p.n+'</b><small>'+(p.u?'رابط محفوظ':'بدون رابط')+'</small></div>').join('')||'<span class="muted">لا توجد قوائم</span>';$('devs').innerHTML=db.devs.map(d=>'<div class="entry"><b>'+d.n+'</b><small dir="ltr">'+d.m+'</small><small>'+d.s+'</small></div>').join('')||'<span class="muted">لا توجد أجهزة</span>';$('devsel').innerHTML=db.devs.map(d=>'<option value="'+d.id+'">'+d.n+'</option>').join('');$('plsel').innerHTML=db.pls.map(p=>'<option value="'+p.id+'">'+p.n+'</option>').join('');$('links').innerHTML=db.devs.map(d=>{let p=db.pls.find(x=>x.id===d.p);return '<div class="entry">'+d.n+'<small>'+(p?p.n:'غير مربوط')+'</small></div>'}).join('');syncPlaylist()}render();
+function render(){$('pls').innerHTML=db.pls.map(p=>'<div class="entry"><b>'+esc(p.n)+'</b><small>'+(p.u?'رابط محفوظ':'بدون رابط')+'</small></div>').join('')||'<span class="muted">لا توجد قوائم</span>';$('devs').innerHTML=db.devs.map(d=>'<div class="entry"><b>'+esc(d.n)+'</b><small dir="ltr">'+esc(d.m)+'</small><small>'+esc(d.s)+'</small></div>').join('')||'<span class="muted">لا توجد أجهزة</span>';$('devsel').innerHTML=db.devs.map(d=>'<option value="'+d.id+'">'+esc(d.n)+'</option>').join('');$('plsel').innerHTML=db.pls.map(p=>'<option value="'+p.id+'">'+esc(p.n)+'</option>').join('');$('links').innerHTML=db.devs.map(d=>{let p=db.pls.find(x=>x.id===d.p);return'<div class="entry">'+esc(d.n)+'<small>'+(p?esc(p.n):'غير مربوط')+'</small></div>'}).join('')}
+function detail(title,body){$('detailTitle').textContent=title;$('detailBody').innerHTML=body;$('settingDetail').classList.add('show');$('settingDetail').scrollIntoView({behavior:'smooth'})}
+$('detailBack').onclick=()=>$('settingDetail').classList.remove('show');
+document.querySelectorAll('.setting').forEach(b=>b.onclick=()=>{
+ const a=b.dataset.action;
+ if(a==='add-playlist'||a==='manage-playlists'){show('admin');return}
+ if(a==='language'){prefs.lang=prefs.lang==='ar'?'en':'ar';savePrefs();alert(prefs.lang==='en'?'Language preference set to English (preview).':'تم اختيار اللغة العربية');return}
+ if(a==='theme'){prefs.theme=prefs.theme==='purple'?'gold':'purple';document.documentElement.style.setProperty('--p',prefs.theme==='purple'?'#29213a':'#201b25');savePrefs();alert('تم تغيير نمط الواجهة في هذه المعاينة');return}
+ if(a==='hide-live'||a==='hide-vod'||a==='hide-series'){let k=a==='hide-live'?'live':a==='hide-vod'?'movies':'series';prefs['hide-'+k]=!prefs['hide-'+k];savePrefs();alert((prefs['hide-'+k]?'تم إخفاء ':'تم إظهار ')+names[k]);content();return}
+ if(a==='sort'){prefs.sort=prefs.sort==='az'?'default':'az';savePrefs();alert(prefs.sort==='az'?'الفرز الأبجدي مفعّل':'تم إلغاء الفرز الأبجدي');content();return}
+ if(a==='history'){history=[];alert('تم مسح سجل المشاهدة المحلي');return}
+ if(a==='clear-movies'||a==='clear-series'){let k=a==='clear-movies'?'movies':'series';playlistItems=playlistItems.filter(x=>classify(x)!==k);content();alert('تم مسح بيانات القسم من الذاكرة المؤقتة');return}
+ if(a==='parental'){detail('مراقبة أهلية','<div class="toggle"><span>تفعيل قفل PIN للأقسام</span><input id="pinToggle" type="checkbox" '+(prefs.pin?'checked':'')+'></div><label>رمز PIN (محلي للمعاينة)</label><input id="pinValue" type="password" maxlength="8" placeholder="أدخل رمزاً تجريبياً"><button class="primary" id="savePin">حفظ</button>');$('savePin').onclick=()=>{prefs.pin=$('pinToggle').checked;prefs.pinCode=$('pinValue').value;savePrefs();alert('تم حفظ إعداد القفل محلياً')};return}
+ if(a==='format'){detail('Live Stream Format','<label>صيغة البث المفضلة</label><select id="fmt"><option>Auto</option><option>HLS (m3u8)</option><option>MP4</option><option>MPEG-TS</option></select><button class="primary" id="saveFmt">حفظ</button>');$('fmt').value=prefs.format||'Auto';$('saveFmt').onclick=()=>{prefs.format=$('fmt').value;savePrefs();alert('تم حفظ التفضيل')};return}
+ if(a==='external'){detail('المشغلات الخارجية','<p class="muted">اختر المشغل المفضل. فتح تطبيق خارجي يتطلب دعماً من الجهاز والتطبيق.</p><select id="ext"><option>المشغل الداخلي</option><option>مشغل خارجي (إن كان مثبتاً)</option></select><button class="primary" id="saveExt">حفظ</button>');$('ext').value=prefs.external||'المشغل الداخلي';$('saveExt').onclick=()=>{prefs.external=$('ext').value;savePrefs();alert('تم حفظ التفضيل')};return}
+ if(a==='auto'){prefs.auto=!prefs.auto;savePrefs();alert('التشغيل التلقائي: '+(prefs.auto?'مفعّل':'متوقف'));return}
+ if(a==='time'){detail('تنسيق الوقت','<select id="timefmt"><option value="24">24 ساعة</option><option value="12">12 ساعة</option></select><button class="primary" id="saveTime">حفظ</button>');$('timefmt').value=prefs.time||'24';$('saveTime').onclick=()=>{prefs.time=$('timefmt').value;savePrefs();alert('تم حفظ تنسيق الوقت')};return}
+ if(a==='subtitle'){detail('إعدادات الترجمة','<label>لغة الترجمة المفضلة</label><select id="sub"><option>العربية</option><option>English</option><option>Auto</option></select><div class="toggle"><span>إظهار الترجمة تلقائياً عند توفرها</span><input id="subOn" type="checkbox" '+(prefs.subOn?'checked':'')+'></div><button class="primary" id="saveSub">حفظ</button>');$('sub').value=prefs.subtitle||'العربية';$('saveSub').onclick=()=>{prefs.subtitle=$('sub').value;prefs.subOn=$('subOn').checked;savePrefs();alert('تم حفظ إعدادات الترجمة')};return}
+ if(a==='device'){detail('نوع الجهاز','<select id="deviceType"><option>Android</option><option>Android TV</option><option>Samsung Tizen</option><option>LG webOS</option><option>Web Browser</option></select><button class="primary" id="saveDevice">حفظ</button>');$('deviceType').value=prefs.device||'Android';$('saveDevice').onclick=()=>{prefs.device=$('deviceType').value;savePrefs();alert('تم حفظ نوع الجهاز')};return}
+ if(a==='update'){alert('أنت تستخدم أحدث نسخة منشورة من معاينة الويب.');return}
+});
+render();
 </script></body></html>
