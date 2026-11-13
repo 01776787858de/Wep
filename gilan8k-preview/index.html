@@ -85,5 +85,6 @@ async function loadPlaylist(force=false){
  }catch(e){playlistItems=[];$('status').textContent='تعذّر تحميل القائمة';$('content').className='empty';$('content').innerHTML='<b>!</b>لم نتمكن من قراءة ملف Playlist<br><small>'+esc(e.message)+' — قد يمنع الخادم القراءة بسبب CORS. استخدم رابط M3U مباشر يسمح بالوصول من المتصفح.</small>'}
 }
 
+function syncPlaylist(){loadPlaylist()}
 function render(){$('pls').innerHTML=db.pls.map(p=>'<div class="entry"><b>'+p.n+'</b><small>'+(p.u?'رابط محفوظ':'بدون رابط')+'</small></div>').join('')||'<span class="muted">لا توجد قوائم</span>';$('devs').innerHTML=db.devs.map(d=>'<div class="entry"><b>'+d.n+'</b><small dir="ltr">'+d.m+'</small><small>'+d.s+'</small></div>').join('')||'<span class="muted">لا توجد أجهزة</span>';$('devsel').innerHTML=db.devs.map(d=>'<option value="'+d.id+'">'+d.n+'</option>').join('');$('plsel').innerHTML=db.pls.map(p=>'<option value="'+p.id+'">'+p.n+'</option>').join('');$('links').innerHTML=db.devs.map(d=>{let p=db.pls.find(x=>x.id===d.p);return '<div class="entry">'+d.n+'<small>'+(p?p.n:'غير مربوط')+'</small></div>'}).join('');syncPlaylist()}render();
 </script></body></html>
