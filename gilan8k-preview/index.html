@@ -61,9 +61,29 @@ main{max-width:1800px;margin:auto;padding:22px 3vw 38px}.home-hero{text-align:ce
 @media (min-width:1101px) and (max-height:760px){.catalog-layout{min-height:calc(100vh - 115px)}.poster-img{height:clamp(155px,17vw,230px)}.category-list,.item-list{max-height:calc(100vh - 205px)}}
 /* High-visibility remote focus for Samsung TV */
 button:focus-visible,.poster:focus-visible{outline:3px solid #ffe16a!important;outline-offset:2px;box-shadow:0 0 20px #ffca3a99!important}
+
+/* Approved GILAN 8K home screen — centered eagle emblem and uncluttered tiles */
+body.home-active .topbar,body.expired-active .topbar{display:none}
+body.home-active main{max-width:1700px;padding:16px 3vw 34px}
+.home-brand{height:clamp(130px,19vh,210px);position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;isolation:isolate}
+.home-emblem{width:clamp(112px,13vw,174px);height:clamp(112px,13vw,174px);border:5px double #f0c45c;border-radius:50%;background:radial-gradient(circle at 50% 38%,#34200b 0,#090709 65%);box-shadow:0 0 12px #ffcf5c,0 0 30px #c88b27aa,inset 0 0 18px #d99c35;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f6cf68;z-index:1;text-align:center}
+.home-emblem span{font-size:clamp(36px,4vw,58px);line-height:1.05;filter:drop-shadow(0 0 6px #e6ac3e)}
+.home-emblem b{font-size:clamp(17px,2vw,25px);line-height:1.05;letter-spacing:1px;text-shadow:0 0 9px #e9b447}
+.home-brand-line{position:absolute;left:0;right:0;top:50%;height:2px;background:linear-gradient(90deg,transparent,#9c641a 12%,#ffe28a 50%,#9c641a 88%,transparent);box-shadow:0 0 12px #f7bd48;z-index:0}
+.home-tiles{gap:clamp(12px,2vw,26px)}
+.home-tile{height:clamp(260px,34vw,390px);border:2px solid #c18a35;border-radius:30px;background:linear-gradient(145deg,#241326 0%,#090609 72%);box-shadow:inset 0 0 26px #a76a2b44,0 0 18px #d69a3544;gap:14px}
+.home-tile:after{content:"";position:absolute;inset:auto 0 0;height:22%;border-bottom:3px solid #f4bd4a;box-shadow:0 8px 22px #f0ae36;pointer-events:none}
+.home-tile .tile-icon{width:clamp(112px,13vw,170px);height:clamp(112px,13vw,170px);border:7px double #efc15b;background:radial-gradient(circle,#3b250d 0,#050505 68%);font-size:clamp(54px,6vw,84px);box-shadow:0 0 22px #e6ae44aa}
+.home-tile strong{font-size:clamp(27px,3vw,43px);text-shadow:0 2px 8px #000}
+.home-tile small{font-size:clamp(17px,1.8vw,25px);color:#fff}
+.home-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px;gap:clamp(10px,2vw,24px);margin:24px auto 0}
+.small-tile{min-width:0;min-height:92px;border:2px solid #704b29;border-radius:18px;background:linear-gradient(145deg,#26172b,#080609);box-shadow:inset 0 0 14px #c68b3930,0 0 12px #a36c2933;gap:14px;padding:12px 16px}
+.small-icon{width:66px;height:66px;border:4px double #efc45e;font-size:30px;background:radial-gradient(circle,#39230b,#050505 70%);box-shadow:0 0 12px #c88c2f66}
+.small-tile b{font-size:clamp(15px,1.6vw,21px);white-space:nowrap}.small-tile small{font-size:clamp(11px,1.2vw,15px);color:#eee}
+@media(max-width:700px){body.home-active main{padding:10px 12px 26px}.home-brand{height:125px;margin-bottom:12px}.home-emblem{width:104px;height:104px;border-width:4px}.home-emblem span{font-size:36px}.home-emblem b{font-size:16px}.home-tiles{gap:8px}.home-tile{height:190px;border-radius:17px;gap:9px;padding:8px 3px}.home-tile .tile-icon{width:76px;height:76px;border-width:4px;font-size:37px}.home-tile strong{font-size:clamp(15px,4vw,20px)}.home-tile small{font-size:11px}.home-tools{gap:7px;margin-top:16px}.small-tile{min-height:70px;flex-direction:column;gap:4px;padding:7px 3px;border-radius:12px}.small-icon{width:38px;height:38px;font-size:19px;border-width:2px}.small-tile b{font-size:12px}.small-tile small{font-size:9px}}
 </style>
 </head>
-<body>
+<body class="home-active">
 <header class="topbar">
  <div class="brand"><div class="brand-mark">🦅</div><div><div class="brand-name">GILAN 8K</div><div class="brand-sub">PREMIUM TV PLAYER</div></div></div>
  <nav class="nav" id="mainNav"><button data-screen="home" class="active">الرئيسية</button><button data-screen="live">مباشر</button><button data-screen="movies">أفلام</button><button data-screen="series">المسلسلات</button></nav>
@@ -72,7 +92,7 @@ button:focus-visible,.poster:focus-visible{outline:3px solid #ffe16a!important;o
 </header>
 <main>
 <section id="homeScreen" class="screen active">
- <div class="home-hero"><h1>GILAN 8K</h1><p>PREMIUM TV PLAYER</p></div>
+ <div class="home-brand"><div class="home-expiry" id="homeExpiry" hidden></div><div class="home-emblem"><span>🦅</span><b>GILAN<br>8K</b></div><div class="home-brand-line"></div></div>
  <div class="home-tiles" id="homeTiles">
   <button class="home-tile" data-open="live"><span class="tile-icon">📺</span><strong>مباشر</strong><small>LIVE TV</small></button>
   <button class="home-tile" data-open="movies"><span class="tile-icon">🎬</span><strong>أفلام</strong><small>MOVIES</small></button>
@@ -83,7 +103,7 @@ button:focus-visible,.poster:focus-visible{outline:3px solid #ffe16a!important;o
   <button class="small-tile" data-open="settings"><span class="small-icon">⚙</span><span><b>الإعدادات</b><small>SETTINGS</small></span></button>
   <button class="small-tile" data-action="logout"><span class="small-icon">⇥</span><span><b>تسجيل الخروج</b><small>LOGOUT</small></span></button>
  </div>
- <div class="info" id="homeStatus">أضف قائمة M3U من قائمة التشغيل لعرض القنوات والأفلام والمسلسلات. هذه معاينة ويب تحفظ إعداداتها على هذا الجهاز.</div>
+ 
 </section>
 <section id="liveScreen" class="screen">
  <div class="screen-head"><button data-screen="home">الرئيسية</button><button class="active">مباشر</button><button data-screen="movies">أفلام</button><button data-screen="series">المسلسلات</button><span class="spacer"></span><span class="screen-title">📺 مباشر</span></div>
@@ -138,7 +158,7 @@ function save(){localStorage.setItem(STORE,JSON.stringify(db))}
 function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function notify(s){var t=$("toast");t.textContent=s;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove("show")},2600)}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-function showScreen(name){document.querySelectorAll(".screen,.admin-screen").forEach(function(x){x.classList.remove("active")});var el=$(name+"Screen");if(el)el.classList.add("active");document.querySelectorAll("[data-screen]").forEach(function(b){b.classList.toggle("active",b.dataset.screen===name)});if(name==="live"||name==="movies"||name==="series")renderCatalog(name);if(name==="admin")renderAdmin();if(name==="settings")renderSettings();window.scrollTo(0,0)}
+function showScreen(name){document.querySelectorAll(".screen,.admin-screen").forEach(function(x){x.classList.remove("active")});var el=$(name+"Screen");if(el)el.classList.add("active");document.body.classList.toggle("home-active",name==="home");document.body.classList.toggle("expired-active",name==="expired");document.querySelectorAll("[data-screen]").forEach(function(b){b.classList.toggle("active",b.dataset.screen===name)});if(name==="live"||name==="movies"||name==="series")renderCatalog(name);if(name==="admin")renderAdmin();if(name==="settings")renderSettings();window.scrollTo(0,0)}
 function parseM3U(raw){var lines=raw.replace(/\r/g,"").split("\n"),out=[],cur=null;lines.forEach(function(line){line=line.trim();if(line.indexOf("#EXTINF:")===0){var comma=line.indexOf(","),name=comma>=0?line.slice(comma+1).trim():"عنصر";function attr(k){var m=line.match(new RegExp(k+'="([^"]*)"',"i"));return m?m[1]:""}cur={id:id(),name:name||"عنصر",group:attr("group-title")||"عام",logo:attr("tvg-logo"),tvgId:attr("tvg-id"),url:""};}else if(line&&line[0]!=="#"&&cur){cur.url=line;out.push(cur);cur=null}});return out}
 function kindOf(x){var s=(x.group+" "+x.name+" "+x.url).toLowerCase();if(/series|مسلسل|مسلسلات|episode|season|s[0-9]{1,2}e[0-9]{1,2}/i.test(s))return "series";if(/movie|film|فيلم|أفلام|vod/i.test(s)||/\.(mp4|mkv|avi)(\?|$)/i.test(x.url))return "movies";return "live"}
 function categories(kind){var map={};items.filter(function(x){return kindOf(x)===kind}).forEach(function(x){map[x.group]=(map[x.group]||0)+1});return Object.keys(map).sort(function(a,b){return a.localeCompare(b,"ar")}).map(function(k){return {name:k,count:map[k]}})}
