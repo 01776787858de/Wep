@@ -98,9 +98,9 @@ body.home-active main{max-width:1700px;padding:16px 3vw 34px}
 <section id="homeScreen" class="screen active">
  <div class="home-brand"><div class="home-expiry" id="homeExpiry" hidden></div><div class="home-emblem"><span>🦅</span><b>GILAN<br>8K</b></div><div class="home-brand-line"></div></div>
  <div class="home-tiles" id="homeTiles">
-  <button class="home-tile" data-open="live"><span class="tile-icon">📺</span><strong>مباشر</strong><small>LIVE TV</small></button>
-  <button class="home-tile" data-open="movies"><span class="tile-icon">🎬</span><strong>أفلام</strong><small>MOVIES</small></button>
-  <button class="home-tile" data-open="series"><span class="tile-icon">🎞️</span><strong>المسلسلات</strong><small>SERIES</small></button>
+  <button type="button" onclick="window.gilanNavigate('live')" class="home-tile" data-open="live"><span class="tile-icon">📺</span><strong>مباشر</strong><small>LIVE TV</small></button>
+  <button type="button" onclick="window.gilanNavigate('movies')" class="home-tile" data-open="movies"><span class="tile-icon">🎬</span><strong>أفلام</strong><small>MOVIES</small></button>
+  <button type="button" onclick="window.gilanNavigate('series')" class="home-tile" data-open="series"><span class="tile-icon">🎞️</span><strong>المسلسلات</strong><small>SERIES</small></button>
  </div>
  <div class="home-tools">
   <button class="small-tile" data-open="admin"><span class="small-icon">☷</span><span><b>قائمة التشغيل</b><small>PLAYLIST</small></span></button>
@@ -163,6 +163,7 @@ function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":
 function notify(s){var t=$("toast");t.textContent=s;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove("show")},2600)}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function showScreen(name){document.querySelectorAll(".screen,.admin-screen").forEach(function(x){x.classList.remove("active")});var el=$(name+"Screen");if(el)el.classList.add("active");document.body.classList.toggle("home-active",name==="home");document.body.classList.toggle("expired-active",name==="expired");document.querySelectorAll("[data-screen]").forEach(function(b){b.classList.toggle("active",b.dataset.screen===name)});if(name==="live"||name==="movies"||name==="series")renderCatalog(name);if(name==="admin")renderAdmin();if(name==="settings")renderSettings();window.scrollTo(0,0)}
+window.gilanNavigate=function(name){try{showScreen(name)}catch(err){console.error("GILAN navigation error",err);var target=$(name+"Screen");document.querySelectorAll(".screen,.admin-screen").forEach(function(x){x.classList.remove("active")});if(target)target.classList.add("active");document.body.classList.toggle("home-active",name==="home");}};
 function parseM3U(raw){var lines=raw.replace(/\r/g,"").split("\n"),out=[],cur=null;lines.forEach(function(line){line=line.trim();if(line.indexOf("#EXTINF:")===0){var comma=line.indexOf(","),name=comma>=0?line.slice(comma+1).trim():"عنصر";function attr(k){var m=line.match(new RegExp(k+'="([^"]*)"',"i"));return m?m[1]:""}cur={id:id(),name:name||"عنصر",group:attr("group-title")||"عام",logo:attr("tvg-logo"),tvgId:attr("tvg-id"),url:""};}else if(line&&line[0]!=="#"&&cur){cur.url=line;out.push(cur);cur=null}});return out}
 function kindOf(x){var s=(x.group+" "+x.name+" "+x.url).toLowerCase();if(/series|مسلسل|مسلسلات|episode|season|s[0-9]{1,2}e[0-9]{1,2}/i.test(s))return "series";if(/movie|film|فيلم|أفلام|vod/i.test(s)||/\.(mp4|mkv|avi)(\?|$)/i.test(x.url))return "movies";return "live"}
 function categories(kind){var map={};items.filter(function(x){return kindOf(x)===kind}).forEach(function(x){map[x.group]=(map[x.group]||0)+1});return Object.keys(map).sort(function(a,b){return a.localeCompare(b,"ar")}).map(function(k){return {name:k,count:map[k]}})}
