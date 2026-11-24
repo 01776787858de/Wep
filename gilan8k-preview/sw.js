@@ -1,5 +1,5 @@
 /* GILAN 8K offline app shell */
-const CACHE_NAME = "gilan8k-shell-v1";
+const CACHE_NAME = "gilan8k-shell-v2";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", event => {
