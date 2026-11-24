@@ -98,9 +98,9 @@ body.home-active main{max-width:1700px;padding:16px 3vw 34px}
 <section id="homeScreen" class="screen active">
  <div class="home-brand"><div class="home-expiry" id="homeExpiry" hidden></div><div class="home-emblem"><span>🦅</span><b>GILAN<br>8K</b></div><div class="home-brand-line"></div></div>
  <div class="home-tiles" id="homeTiles">
-  <button type="button" onclick="window.gilanNavigate('live')" class="home-tile" data-open="live"><span class="tile-icon">📺</span><strong>مباشر</strong><small>LIVE TV</small></button>
-  <button type="button" onclick="window.gilanNavigate('movies')" class="home-tile" data-open="movies"><span class="tile-icon">🎬</span><strong>أفلام</strong><small>MOVIES</small></button>
-  <button type="button" onclick="window.gilanNavigate('series')" class="home-tile" data-open="series"><span class="tile-icon">🎞️</span><strong>المسلسلات</strong><small>SERIES</small></button>
+  <button type="button" class="home-tile" data-open="live"><span class="tile-icon">📺</span><strong>مباشر</strong><small>LIVE TV</small></button>
+  <button type="button" class="home-tile" data-open="movies"><span class="tile-icon">🎬</span><strong>أفلام</strong><small>MOVIES</small></button>
+  <button type="button" class="home-tile" data-open="series"><span class="tile-icon">🎞️</span><strong>المسلسلات</strong><small>SERIES</small></button>
  </div>
  <div class="home-tools">
   <button class="small-tile" data-open="admin"><span class="small-icon">☷</span><span><b>قائمة التشغيل</b><small>PLAYLIST</small></span></button>
@@ -243,12 +243,6 @@ document.addEventListener("pointerup",function(e){
  routeGilanControl(e);
 },true);
 document.addEventListener("click",routeGilanControl,true);
-document.addEventListener("keydown",function(e){
- if(e.key!=="Enter"&&e.key!==" ")return;
- var t=e.target&&e.target.closest?e.target.closest("[data-open],[data-screen]"):null;
- if(!t)return;
- routeGilanControl({target:t,type:"keyboard",cancelable:true,preventDefault:function(){e.preventDefault()}});
-},true);
 function boot(){applyOrder();loadActive();renderAdmin();renderSettings();Object.keys(db.hidden).forEach(function(k){if(db.hidden[k]){var t=document.querySelector('[data-open="'+k+'"]');if(t)t.classList.add("hidden")}})}
 boot();
 })();
